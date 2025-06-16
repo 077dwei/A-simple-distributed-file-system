@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package hdfs;
+
+// NameNode 提供元数据管理接口
+service NameNode {
+// 创建文件，返回每个块的 id 和对应的 DataNode 地址列表
+rpc CreateFile (FileRequest) returns (BlockLocations);
+// 获取文件块列表及所在节点
+rpc GetFile (FileRequest) returns (BlockLocations);
+// 列出所有文件
+rpc ListFiles (Empty) returns (FileList);
+}
+
+// DataNode 提供块读写接口
+service DataNode {
+rpc WriteBlock (BlockData) returns (Ack);
+rpc ReadBlock (BlockID) returns (BlockData);
+}
+
+message FileRequest {
+string filename = 1;
+}
+
+message BlockID {
+string block_id = 1;
+}
+
+message BlockData {
+string block_id = 1;
+bytes data = 2;
+}
+
+message BlockLocations {
+repeated string block_ids = 1;
+// 对应 block_ids 的 DataNode 地址（"host:port"）
+repeated string datanodes = 2;
+}
+
+message FileList {
+repeated string filenames = 1;
+}
+
+message Ack {
+string status = 1;
+}
+
+message Empty {}

@@ -1,0 +1,11 @@
+{
+  "example.txt": {
+    "block_ids": [
+      "example.txt_blk_2644"
+    ],
+    "datanodes": [
+      "127.0.0.1:50061",
+      "127.0.0.1:50062"
+    ]
+  }
+}
